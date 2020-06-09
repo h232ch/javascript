@@ -1,0 +1,46 @@
+
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset="utf-8"/>
+	</head>
+	<body>
+	</body> 
+		<script>
+
+
+			function func(){
+			    if(window === this){
+			        document.write("window === this");
+			    }
+			}
+			func(); 
+
+			var o = {
+			    func : function(){
+			        if(o === this){
+			            document.write("o === this");
+			        }
+			    }
+			}
+			o.func();   //메서드 내부 함수의 경우 부모 객체를 This로 가르킴
+
+			var funcThis = null; 
+ 
+			function Func(){
+			    funcThis = this;
+			}
+			var o1 = Func(); // 전역변수로서 사용 
+			if(funcThis === window){
+			    document.write('window <br />');
+			}
+			 
+			var o2 = new Func(); //생성자로 호출 후 새로운 메모리를 할당해서 사용 즉, window.Func가 아닌 windown.o2.Func가되어 부모인 o2를 this로 가르킴
+			if(funcThis === o2){
+			    document.write('o2 <br />'); // 위 예제와 동일하다. 어떠한 객체 내부에 정의된 this의 경우 부모의 값을 this로 갖는다.
+
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,72 @@
+
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset="utf-8"/>
+	</head>
+	<body>
+	</body> 
+		<script>
+
+			function outter(){
+				function inner(){
+					var title = 'coding everybody';
+					alert(title);
+				}
+			}
+
+			outter(); /* 
+
+			  */
+
+			  function outter2(){
+
+			  	var title = 'coding everybody';
+			  	return function(){
+			  		alert(title);
+			  	}
+			  }
+
+			  var inner = outter2(); //inner에는 alert(title)이 저장됨
+			  inner(); // outter2 함수의 생이 끝나서 title이라는 외부함수에 존재하는 변수가 사라졌음에도 coding everybody가 실행됨
+			  // 외부함수가 종료되고나서도 접근이 가능함 
+
+
+			  function factory_movie(title){
+			  	return{
+			  		get_title : function(){
+			  			return title;
+			  		},
+			  		set_title : function(_title){
+			  			title = _title;
+			  		}
+			  	}
+			  }
+
+			  ghost = factory_movie('Ghost in the shell'); // return{get_title, set_title 값이 담긴 ghost 객체}
+			  matrix = factory_movie('Matrix');
+
+			  alert(ghost.get_title());
+			  alert(matrix.get_title());
+
+			  ghost.set_title('공각기동대'); // factory_+movie의 title값을 변경함
+			  matrix.set_title('아브라카타브라'); // 함수의 생애주기가 종료되면 함수의 모든 내용은 초기화됨 
+			  // title 또한 함수의 매개변수로, 함수의 동작이 종료되면 사라짐
+			  // 그러나 함수동작이후 title을 조작해야한다면 객체에 함수의 리턴값에 title 수정 메서드를 추가하여 조작함
+			  // 이는 큰 프로젝트를 진행할 떄 누구나 title을 조작하지 못하도록 하기 위함임(보안성)
+			  // 각 객체별로 title을 조작하게함으로 title의 변경의 영향성을 줄임
+
+			  // 정리 : 일반적으로 함수의 실행뒤에 함수내의 변수값은 초기화되어 재사용이 불가능하다.
+			  // 하지만 클로저의 경우 호출시 함수와 관련된 맥락을 다시 살려내어 변수를 조작할수 있게한다.
+
+			  alert(ghost.get_title()); 
+			  alert(matrix.get_title());
+
+			  // https://developer.mozilla.org/ko/docs/Web/JavaScript/Guide/Closures
+		
+
+		</script>
+	</body>
+
+</html>

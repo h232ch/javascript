@@ -1,0 +1,43 @@
+
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset="utf-8"/>
+	</head>
+	<body>
+	</body> 
+		<script>
+			function sum(arg1, arg2){
+				return arg1+arg2;
+			}
+
+			console.log(sum(1,2)); // 일반적인 함수 호출방법
+
+			console.log(sum.apply(null, [1,3])); // 함수를 호출할때 두가지 방식
+
+			// 왜 이런 방식을 사용하느냐? Null값의 위치에 
+
+			o1 = {value1:1, val2:2, val3:3}
+			o2 = {v1:10, v2:20, v3:100, v4:25}
+
+			function sum(){
+				var _sum = 0;
+				for(name in this){
+					_sum += this[name]; // this의미는 본래 자기 자신(sum())을 가르킨다. 
+					// 자바스크림트에서는 sum.appy(o1)하면, this의 값이 o1이 된다. 
+					// 즉 this함수는 apply함수에서 지정하기전까지 아무 값도 같지않는다.
+					// 이것은 o1 = {value1:1, val2:2, val3:3, sum:sum} 이렇게 된것과 동일한데
+					// alert(o1.sum()) 하게되면 동일한 결과와 sum의 코드가 더해진 내용을 볼수있다.
+					// 이것은 if문으로 function내용은 제거 가능함 그런데 불편함 그래서 apply를 써주는거임
+				}
+				return _sum;
+			}
+
+			alert(sum.apply(o1)) //6
+			alert(sum.apply(o2)) //185
+
+		</script>
+	</body>
+
+</html>
